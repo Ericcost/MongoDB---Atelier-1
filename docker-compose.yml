@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+
+  mongodb1:
+
+    image: mongo:latest
+
+    container_name: mongodb1
+
+    restart: unless-stopped
+
+    ports:
+
+      - "27017:27017"
+
+    volumes:
+
+      - mongodb1-data:/data/db
+
+    networks:
+
+      - mongo-net
+
+    command: mongod --bind_ip_all --replSet rs0
+
+  mongodb2:
+
+    image: mongo:latest
+
+    container_name: mongodb2
+
+    restart: unless-stopped
+
+    ports:
+
+      - "27018:27017"
+
+    volumes:
+
+      - mongodb2-data:/data/db
+
+    networks:
+
+      - mongo-net
+
+    command: mongod --bind_ip_all --replSet rs0
+
+  mongodb3:
+
+    image: mongo:latest
+
+    container_name: mongodb3
+
+    restart: unless-stopped
+
+    ports:
+
+      - "27019:27017"
+
+    volumes:
+
+      - mongodb3-data:/data/db
+
+    networks:
+
+      - mongo-net
+
+    command: mongod --bind_ip_all --replSet rs0
+
+volumes:
+
+  mongodb1-data:
+
+  mongodb2-data:
+
+  mongodb3-data:
+
+networks:
+
+  mongo-net:
+
+    driver: bridge
