@@ -17,18 +17,6 @@ Installation of MongoDB :
 
 [Run MongoDB](https://medium.com/@arun0808rana/mongodb-installation-on-debian-12-8001d0dafb56)
 
-Then create a [[Docker-compose]] :
-
-==N.B :==
-If you have any problem with your containers and you would like to remove them :
-```
-sudo docker stop mongodb1 mongodb2 mongodb3 
-```
-
-```
-sudo docker rm mongodb1 mongodb2 mongodb3
-```
-
 Run : 
 ```
 sudo docker compose up -d
@@ -73,12 +61,17 @@ create a collection :
 db.createCollection("users")
 ```
 
+copy the script `fakeusers.js' within your primary container running : 
+```
+docker cp /path/to/your/local/file container_name:/path/inside/container
+```
+
 To populate a db within the mongodb1 container you have to get access to the bash terminal : 
 ```sh
 sudo docker -it mongodb1 bash 
 ```
 
-Then you can create a [[nodejs script]] : `fakeusers.js`
+Then you can use the script copied within mongodb1 : `fakeusers.js`
 ==install mongodb and faker modules== :
 `npm i faker`
 `npm i mongodb`
@@ -239,3 +232,30 @@ db.users.deleteOnedelete({age:30})
 ```
 
 # Étape 4 : Automate CRUD using a script
+
+copy the script `populate.js` within your primary container running : 
+```
+docker cp /path/to/your/local/file container_name:/path/inside/container
+```
+
+Then you can use the script : `populate.js`
+
+you can run the `populate.js` script by typing this following command : 
+```sh
+node populate.js
+100 users inserted successfully.
+Users older than 30:
+[
+  {
+    _id: new ObjectId('66162c89d1013ded46b369cc'),
+    name: 'Carolyn Reichert',
+    age: 56,
+    email: 'Fidel66@hotmail.com',
+    createdAt: '2023-12-18T12:57:00.463Z'
+  },
+...
+200 users' ages updated successfully.
+0 user deleted successfully.
+```
+
+
